@@ -1,0 +1,69 @@
+version: "3"
+
+volumes:
+  local_postgres_data:
+    {}
+    # external:
+    #   name: ./db/data
+  # postgres_data_backups:
+  #         external:
+  #             name: ./db/data
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    image: local_geodjango
+    depends_on:
+      - postgres
+      # - mailhog
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - "8001:8001"
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/production/postgres/Dockerfile
+    image: production_postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      # - local_postgres_data_backups:/backups
+      # - local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+  # mailhog:
+  #   image: mailhog/mailhog:v1.0.0
+  #   ports:
+  #     - "8025:8025"
+  # redis:
+  #   image: redis:5.0
+  # celeryworker:
+  #   <<: *django
+  #   image: archfndr_local_celeryworker
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #     - mailhog
+  #   ports: []
+  #   command: /start-celeryworker
+  # celerybeat:
+  #   <<: *django
+  #   image: archfndr_local_celerybeat
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #     - mailhog
+  #   ports: []
+  #   command: /start-celerybeat
+  # flower:
+  #   <<: *django
+  #   image: archfndr_local_flower
+  #   ports:
+  #     - "5555:5555"
+  #   command: /start-flower

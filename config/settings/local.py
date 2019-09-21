@@ -11,7 +11,7 @@ from .base import *  # noqa
 #     default="GEeRfFd1hXYMqbH4vQWSE4zm7MpJIpfXJibRJxXjPMJSAmbDEnxsfmXCciO3FoCc",
 # )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-# ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1","127.0.0.1:8080"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1","127.0.0.1:8080"]
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 #CELERY_TASK_EAGER_PROPAGATES = True
 # Your stuff...
 # ------------------------------------------------------------------------------
-SITE_URL = '127.0.0.1:8000'
+SITE_URL = '127.0.0.1:8001'
 #USE_DOCKER = "no"
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -69,7 +69,7 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.postgresql',
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'tpf',
+        'NAME': 'apps',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
